@@ -27,6 +27,11 @@
               <router-link to="/products/create" class="nav-link">Créer un produit</router-link>
             </li>
           </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item disabled">
+              <span class="nav-link">{{ cartTotalPrice }},00 €</span>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -65,7 +70,7 @@ export default {
       'users'
     ]),
     ...mapGetters([
-      'usersCount'
+      'usersCount', 'cartTotalPrice'
     ]),
     toto () {
       return 'test'

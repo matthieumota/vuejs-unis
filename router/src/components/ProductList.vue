@@ -10,6 +10,11 @@
               </router-link>
             </h4>
 
+            <button @click="addProductToCart(product)"
+                    class="btn btn-primary">
+              Ajouter au panier
+            </button>
+
             <router-link class="btn btn-info"
               :to="'/products/edit/'+product.id"
             >
@@ -28,11 +33,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
       products: []
     }
+  },
+  methods: {
+    ...mapActions(['addProductToCart'])
   },
   mounted () {
     this.$http.get('http://localhost:3000/products').then(response => {
