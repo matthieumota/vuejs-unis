@@ -8,6 +8,7 @@ import ProductList from './components/ProductList'
 import ProductShow from './components/ProductShow'
 import ProductEdit from './components/ProductEdit'
 import ProductDelete from './components/ProductDelete'
+import store from './store'
 
 const User = () => import('./components/User')
 const UserSettings = () => import('./components/UserSettings')
@@ -46,6 +47,7 @@ const router = new VueRouter({
 
 new Vue({
   router,
+  store,
   render: h => h(App),
   delimiters: ['${', '}']
 }).$mount('#app')

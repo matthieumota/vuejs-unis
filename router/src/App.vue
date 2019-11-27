@@ -34,12 +34,43 @@
     <div class="container mt-5">
       <router-view></router-view>
     </div>
+
+    <ul>
+      <li v-for="user in users" :key="user.name">
+        {{ user.name }}
+      </li>
+    </ul>
+
+    On a {{ usersCount }} utilisateurs.
+
+    <button @click='addUser("toto")'>Ajouter</button>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex'
+
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    /*...mapMutations([
+      'addUser'
+    ])*/
+    ...mapActions([
+      'addUser'
+    ])
+  },
+  computed: {
+    ...mapState([
+      'users'
+    ]),
+    ...mapGetters([
+      'usersCount'
+    ]),
+    toto () {
+      return 'test'
+    }
+  }
 }
 </script>
 
