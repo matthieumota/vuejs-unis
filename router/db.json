@@ -1,0 +1,16 @@
+{
+  "products": [
+    {
+      "name": "Test",
+      "id": 25
+    },
+    {
+      "name": "Test",
+      "id": 26
+    },
+    {
+      "name": "Je modifie mon produit",
+      "id": 27
+    }
+  ]
+}
