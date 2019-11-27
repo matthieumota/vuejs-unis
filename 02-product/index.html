@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue JS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="row">
+            <div class="col-6">
+                <img
+                  class="img-fluid"
+                  :src="product.variants[product.selectedVariant].image"
+                  :alt="title">
+            </div>
+            <div class="col-6">
+                <h1>{{ title }}</h1>
+                <p>{{ price * product.quantity }},00 €</p>
+                <input type="text" class="form-control" v-model="product.quantity">
+                <p class="mt-3 text-success" v-if="product.inStock">
+                    En stock
+                </p>
+                <ul class="list-unstyled">
+                    <li v-for="feature in product.features">
+                        {{ feature }}
+                    </li>
+                </ul>
+                <div>
+                    <div v-for="(variant, index) in product.variants" class="square" :style="{ 'background-color': variant.color }" @click="changeVariant(index)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intégrer le CDN de Vue JS -->
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <!-- Intégrer notre application Vue -->
+    <script src="js/app.js"></script>
+</body>
+</html>
