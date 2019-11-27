@@ -29,7 +29,9 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item disabled">
-              <span class="nav-link">{{ cartTotalPrice }},00 €</span>
+              <router-link to="/cart" class="nav-link">
+                {{ cartTotalPrice }},00 €
+              </router-link>
             </li>
           </ul>
         </div>

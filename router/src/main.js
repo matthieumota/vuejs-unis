@@ -8,6 +8,7 @@ import ProductList from './components/ProductList'
 import ProductShow from './components/ProductShow'
 import ProductEdit from './components/ProductEdit'
 import ProductDelete from './components/ProductDelete'
+import Cart from './components/Cart'
 import store from './store'
 
 const User = () => import('./components/User')
@@ -41,6 +42,7 @@ const router = new VueRouter({
     { path: '/products/edit/:id', component: ProductEdit },
     { path: '/products/delete/:id', component: ProductDelete, props: true },
     { path: '/products/:id', component: ProductShow },
+    { path: '/cart', component: Cart },
     { path: '*', component: Home }
   ]
 })

@@ -22,6 +22,9 @@ export default new Vuex.Store({
       product.price = Math.floor(Math.random() * (Math.floor(100) - Math.ceil(10))) + Math.ceil(10);
       product.quantity = 1
       state.cart.push(product)
+    },
+    removeProductFromCart (state, product) {
+      state.cart = state.cart.filter(p => p.id !== product.id)
     }
   },
   getters: { // Comme computed sur un composant
@@ -31,11 +34,14 @@ export default new Vuex.Store({
     cartTotalPrice (state) {
       let total = 0;
 
-      for (let product of state.cart) {
+      for (let product of state.cart.filter(p => p.price <= 10)) {
         total += product.price * product.quantity
       }
 
       return total
+    },
+    cartCheap (state) {
+      return state.cart.filter(p => p.price <= 10)
     }
   },
   actions: { // Comme methods sur un composant
@@ -46,6 +52,11 @@ export default new Vuex.Store({
     },
     addProductToCart (store, product) {
       store.commit('addProductToCart', product)
+    },
+    removeProductFromCart (store, product) {
+      setTimeout(() => {
+        store.commit('removeProductFromCart', product)
+      }, 2000)
     }
   }
 })
