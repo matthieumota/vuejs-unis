@@ -1,44 +1,90 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vue JS</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/app.css">
-</head>
-<body>
-    <div id="app" class="container">
-        <div class="row">
-            <div class="col-6">
-                <img
-                  class="img-fluid"
-                  :src="product.variants[product.selectedVariant].image"
-                  :alt="title">
-            </div>
-            <div class="col-6">
-                <h1>{{ title }}</h1>
-                <p>{{ price * product.quantity }},00 €</p>
-                <input type="text" class="form-control" v-model="product.quantity">
-                <p class="mt-3 text-success" v-if="product.inStock">
-                    En stock
-                </p>
-                <ul class="list-unstyled">
-                    <li v-for="feature in product.features">
-                        {{ feature }}
-                    </li>
-                </ul>
-                <div>
-                    <div v-for="(variant, index) in product.variants" class="square" :style="{ 'background-color': variant.color }" @click="changeVariant(index)"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Vue JS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="app" class="container">
+            <div class="row">
+                <div class="col-6">
+                    <img class="img-fluid" :src="'img/' + variants[currentVariant].image" :alt="title">
+                </div>
+                <div class="col-6">
+                    <h1>{{ title }}</h1>
+                    <p>{{ formattedPrice }}</p>
+                    <input type="text" class="form-control" v-model="quantity">
+                    <p class="mt-3 text-success" v-if="product.inStock > 0 && quantity <= product.inStock">En stock</p>
+                    <p class="mt-3 text-danger" v-else>Pas disponible</p>
+                    <ul class="list-unstyled">
+                        <li v-for="feature in features">{{ feature }}</li>
+                    </ul>
+                    <div class="d-flex">
+                        <div
+                            v-for="(variant, index) in variants"
+                            class="w-25 mr-3"
+                            :style="{ backgroundColor: variant.color }"
+                            @click="changeVariant(index)"
+                        >&nbsp;</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Intégrer le CDN de Vue JS -->
-    <script src="https://vuejs.org/js/vue.js"></script>
-    <!-- Intégrer notre application Vue -->
-    <script src="js/app.js"></script>
-</body>
+            <!-- <mon-composant inline-template>
+                <h1>Je suis un composant</h1>
+            </mon-composant> -->
+            <mon-composant v-for="feature in features" :feature="feature" />
+        </div> <!-- Fin du #app -->
+
+        <script src="https://vuejs.org/js/vue.js"></script>
+        <script>
+            var numberFormat = new Intl.NumberFormat('fr', { style: 'currency', currency: 'EUR' });
+
+            // Création d'un composant
+            Vue.component('mon-composant', {
+                template: `<h1>{{ feature }}</h1>`,
+                props: ['feature'],
+            });
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    // product: {
+                    name: 'Cat',
+                    brand: 'Brand',
+                    // image: '1.jpg',
+                    // price: 10,
+                    // inStock: 10,
+                    currentVariant: 0,
+                    quantity: 1,
+                    features: ['Mignon', 'Affectueux', 'Gourmand'],
+                    variants: [
+                        { color: 'blue', image: '1.jpg', price: 10, inStock: 10 },
+                        { color: 'red', image: '2.jpg', price: 12, inStock: 5 },
+                    ],
+                    // },
+                },
+                computed: {
+                    title: function () {
+                        return this.brand + ' ' + this.name;
+                    },
+                    product: function () {
+                        return this.variants[this.currentVariant];
+                    },
+                    formattedPrice: function () {
+                        // let numberFormat = new Intl.NumberFormat('fr', { style: 'currency', currency: 'EUR' });
+                        return numberFormat.format(this.variants[this.currentVariant].price * this.quantity);
+                    },
+                },
+                methods: {
+                    changeVariant(index) {
+                        this.currentVariant = index;
+                        // alert(this.variants[index].color);
+                    },
+                },
+            });
+        </script>
+    </body>
 </html>

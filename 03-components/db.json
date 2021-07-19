@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Chaussure"
+    },
+    {
+      "id": 2,
+      "name": "Voiture"
+    },
+    {
+      "id": 3,
+      "name": "Moto"
+    },
+    {
+      "id": 4,
+      "name": "Clavier"
+    },
+    {
+      "name": "Test",
+      "id": 5
+    },
+    {
+      "name": "rear",
+      "id": 8
+    },
+    {
+      "name": "aeteatea",
+      "id": 9
+    },
+    {
+      "name": "earearea",
+      "id": 10
+    },
+    {
+      "name": "jtejt",
+      "id": 11
+    }
+  ]
+}

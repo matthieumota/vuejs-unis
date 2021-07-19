@@ -25,14 +25,30 @@
         </div>
 
         <input type="text" class="form-control" v-model="message">
+        <input type="checkbox" v-model="success">
 
         <ul :class="{ 'text-success': success, 'text-danger': !success }" :style="{ backgroundColor: 'yellow' }">
             <li v-for="(contact, key) in contacts">
-                {{ key }} : {{ contact.name }}
+                {{ key }} : {{ contact.name.toUpperCase() }}
             </li>
         </ul>
 
+        <div class="alert"
+           :class="{ 'alert-success': success, 'alert-danger': !success }"
+        >
+            Ceci est {{ success ? 'un succès' : 'une erreur' }}.
+
+            <button class="close" @click="close">&times;</button>
+        </div>
+
+        <div v-html="content"></div>
+
+        <form @submit.prevent="close">
+            <button>Envoyer</button>
+        </form>
+
         <p>
+            {{ message.split('').reverse().join('') }}
             {{ messageReversed }}
             {{ reversedMessage() }}
         </p>
