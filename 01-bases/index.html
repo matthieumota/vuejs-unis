@@ -1,65 +1,70 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vue JS</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-    <div id="app" class="container">
-        <a v-bind:[attribute]="link" :title="10 + 20" v-html="message" @click.prevent="display">
-            {{ message }}
-        </a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Vue JS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="app" class="container">
+            <!-- Interpolation Mustache -->
+            <span v-once>{{ message }}</span>
+            <a v-bind:href="link" :title="message" @click.prevent="showLink">
+                {{ message }}
+            </a>
+            {{ message.split('').reverse().join('') }}
+            {{ reverseMessage }}
+            {{ reverseMessage2() }}
+            <div>
+                <input type="text" v-model="message"
+                       @keyup.esc="message = ''"
+                       class="form-control"
+                       :class="{ 'is-invalid': !success }">
+            </div>
 
-        <div class="alert alert-success" v-if="success">
-            Ceci est un succès.
+            <div class="alert alert-success" v-if="success === true">
+                Message de succès.
+            </div>
+            <div class="alert alert-danger" v-else>
+                Message d'erreur
+            </div>
 
-            <button class="close" @click="close">&times;</button>
+            <label>
+                <input type="checkbox" v-model="success">
+                <span v-if="!success">Afficher un succès</span>
+                <span v-else>Afficher une erreur</span>
+            </label>
+
+            <button type="button" class="close" @click="close">
+                <span>&times;</span>
+            </button>
+
+            <ul>
+                <!--
+                    On va essayer d'exécuter un événement au clic sur chacun des li
+                    Il faudra donc créer une méthode... changeContact(contact.name)
+                    Dans cette méthode, il faudra récupérer l'argument et il faudra donc le
+                    stocker dans une data (contactSelected) à null par défaut.
+                    Il faudra ensuite comparer contactSelected à chaque contact dans le li
+                    et ajouter la classe bg-primary si le contactSelected est égal à l'un
+                    des contacts (:class="{CLASSNAME: 1 === 1}"). On peut aussi faire un span
+                    avec un v-if ?
+                -->
+                <li v-for="(contact, index) in contacts"
+                    @click="changeContact(contact)"
+                    :class="{ 'bg-primary': contact === contactSelected }"
+                >
+                    {{ index }} : {{ contact.name.toUpperCase() }}
+                </li>
+            </ul>
+
+            <h2>Contenu HTML</h2>
+            <div v-html="HTMLContent"></div>
         </div>
-        <div class="alert alert-danger" v-else>
-            Ceci est une erreur.
 
-            <button class="close" @click="close">&times;</button>
-        </div>
-
-        <input type="text" class="form-control" v-model="message">
-        <input type="checkbox" v-model="success">
-
-        <ul :class="{ 'text-success': success, 'text-danger': !success }" :style="{ backgroundColor: 'yellow' }">
-            <li v-for="(contact, key) in contacts">
-                {{ key }} : {{ contact.name.toUpperCase() }}
-            </li>
-        </ul>
-
-        <div class="alert"
-           :class="{ 'alert-success': success, 'alert-danger': !success }"
-        >
-            Ceci est {{ success ? 'un succès' : 'une erreur' }}.
-
-            <button class="close" @click="close">&times;</button>
-        </div>
-
-        <div v-html="content"></div>
-
-        <form @submit.prevent="close">
-            <button>Envoyer</button>
-        </form>
-
-        <p>
-            {{ message.split('').reverse().join('') }}
-            {{ messageReversed }}
-            {{ reversedMessage() }}
-        </p>
-
-        {{ fullName }}
-        <input type="text" class="form-control" v-model="fullName">
-    </div>
-
-    <!-- Intégrer le CDN de Vue JS -->
-    <script src="https://vuejs.org/js/vue.js"></script>
-    <!-- Intégrer notre application Vue -->
-    <script src="js/app.js"></script>
-</body>
+        <!-- En dev -->
+        <script src="https://vuejs.org/js/vue.js"></script>
+        <script src="js/app.js"></script>
+    </body>
 </html>
